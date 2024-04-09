@@ -1,6 +1,7 @@
 package com.example.controledeprodutos.repository;
 
 import com.example.controledeprodutos.model.Product;
+import com.example.controledeprodutos.model.exception.ResourceNotFoundException;
 import org.springframework.stereotype.Repository;
 
 import java.util.*;
@@ -59,7 +60,7 @@ public class ProductRepository {
         var productFound = getProductById(product.getId());
 
         if(productFound.isEmpty()){
-            throw new InputMismatchException("Produto não encontrado");
+            throw new ResourceNotFoundException("Produto não encontrado");
         }
 
         deleteProduct(product.getId());
