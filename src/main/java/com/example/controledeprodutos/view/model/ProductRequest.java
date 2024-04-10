@@ -1,28 +1,12 @@
-package com.example.controledeprodutos.model;
+package com.example.controledeprodutos.view.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-
-@Entity
-public class Product {
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Integer id;
+public class ProductRequest {
     private String name;
     private Integer amount;
     private Double price;
     private String observation;
     private String description;
 
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
 
     public String getName() {
         return name;
@@ -63,4 +47,5 @@ public class Product {
     public void setDescription(String description) {
         this.description = description;
     }
+
 }

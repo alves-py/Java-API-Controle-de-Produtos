@@ -1,14 +1,6 @@
-package com.example.controledeprodutos.model;
+package com.example.controledeprodutos.shared;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-
-@Entity
-public class Product {
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+public class ProductDTO {
     private Integer id;
     private String name;
     private Integer amount;
