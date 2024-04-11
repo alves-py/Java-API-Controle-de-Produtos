@@ -3,6 +3,7 @@ package com.example.controledeprodutos.view.controller;
 import com.example.controledeprodutos.model.Product;
 import com.example.controledeprodutos.services.ProductService;
 import com.example.controledeprodutos.shared.ProductDTO;
+import com.example.controledeprodutos.view.model.ProductRequest;
 import com.example.controledeprodutos.view.model.ProductResponse;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,8 +34,13 @@ public class ProductController {
     }
 
     @PostMapping
-    public ProductDTO addProduct(@RequestBody ProductDTO productdto){
-        return productService.addProduct(productdto);
+    public ResponseEntity<ProductResponse> addProduct(@RequestBody ProductRequest productRequest){
+        ModelMapper mapper = new ModelMapper();
+
+        ProductDTO productDTO = mapper.map(productRequest, ProductDTO.class);
+        productDTO = productService.addProduct(productDTO);
+
+        return new ResponseEntity<>(mapper.map(productDTO, ProductResponse.class), HttpStatus.CREATED);
     }
 
     @GetMapping("/{id}")
@@ -46,13 +52,19 @@ public class ProductController {
     }
 
     @DeleteMapping("/{id}")
-    public String deleteProductById(@PathVariable Integer id){
+    public ResponseEntity<?> deleteProductById(@PathVariable Integer id){
         productService.deleteProduct(id);
-        return  "Produto deletado com sucesso!";
+        return  new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
     @PutMapping("/{id}")
-    public ProductDTO updateProduct(@RequestBody ProductDTO productDTO, @PathVariable Integer id){
-        return productService.updateProduct(id, productDTO);
+    public ResponseEntity<ProductResponse> updateProduct(@RequestBody ProductRequest productRequest, @PathVariable Integer id){
+        ModelMapper mapper = new ModelMapper();
+        ProductDTO productDTO = mapper.map(productRequest, ProductDTO.class);
+        productDTO = productService.updateProduct(id, productDTO);
+
+        return new ResponseEntity<>(
+                mapper.map(productDTO, ProductResponse.class),
+                HttpStatus.OK);
     }
 }
